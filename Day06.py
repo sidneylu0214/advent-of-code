@@ -30,17 +30,17 @@ print(len(input_1))
 # Time: O(d * n)
 # Space: O(1)
 
-slot = [0] * (new_timer + 1)
+fish_time = [0] * (new_timer + 1)
 
 for i in inputs:
-    slot[i] += 1
+    fish_time[i] += 1
 
 for d in range(days):
-    slot = slot[1:] + slot[:1]
-    slot[reset_timer] += slot[new_timer]
+    fish_time = fish_time[1:] + fish_time[:1]
+    fish_time[reset_timer] += fish_time[new_timer]
     pass
 
-print(sum(slot))
+print(sum(fish_time))
 
 
 # part 2 fabonacci Time O(n) method
