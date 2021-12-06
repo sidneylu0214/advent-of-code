@@ -17,10 +17,11 @@ new_timer = 8
 
 input_1 = np.array(inputs)
 for d in range(days):
-    new_element = [new_timer + 1] * list(input_1).count(0)
-    input_1 = np.concatenate([input_1, np.array(new_element)])
-    input_1[input_1 == 0] = 1 + reset_timer
     input_1 -= 1
+    new_element = [new_timer] * list(input_1).count(-1)
+    input_1 = np.concatenate([input_1, np.array(new_element)])
+    input_1[input_1 == -1] = reset_timer
+    
     pass
 
 print(len(input_1))
