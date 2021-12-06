@@ -24,7 +24,7 @@ for d in range(days):
     
     pass
 
-print(len(input_1))
+slow_answer = len(input_1)
 
 
 # part 1 fabonacci space O(1) method
@@ -53,14 +53,14 @@ days = 256
 reset_timer = 6 + 1
 new_timer = 8 + 1
 
-# initialize tables
-fabonacci = [1]
-fabonacci += [2] * reset_timer
-fabonacci += [3] * (new_timer - reset_timer)
-fabonacci += list(range(days))
+# initialize table
+fabonacci_table = [1]
+fabonacci_table += [2] * reset_timer
+fabonacci_table += [3] * (new_timer - reset_timer)
+fabonacci_table += [0] * days
 
-for d in range(new_timer + 1, len(fabonacci)):
-    f = fabonacci
+for d in range(new_timer + 1, days):
+    f = fabonacci_table
     f[d] = f[d - new_timer] + f[d - reset_timer]
 
-print(sum([fabonacci[days - i] for i in inputs]))
+print(sum([fabonacci_table[days - i] for i in inputs]))
