@@ -44,8 +44,8 @@ for d in range(days):
 print(sum(fish_time))
 
 
-# part 2 fabonacci Time O(n) method
-# Time: O(d + n)
+# part 2 fabonacci Time O(1) method
+# Time: O(d + n * 1)
 # Space: O(d)
 
 days = 256
