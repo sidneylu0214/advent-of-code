@@ -13,9 +13,7 @@ max_i = max(inputs)
 print(min([sum(abs(inputs - i)) for i in inputs]))
 
 # part 2
-table = np.array(range(max_i + 1))
-for i in range(1, len(table)):
-    table[i] += table[i-1]
-    pass
+n = np.array(range(max_i + 1))
+table = ((n[:] + 1) * n[:] ) // 2
 
 print(min([sum([table[abs(i - m)] for i in inputs]) for m in range(max_i)]))
