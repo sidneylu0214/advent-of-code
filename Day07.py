@@ -7,12 +7,12 @@ with open('input.txt', 'r') as input_file:
     pass
 
 inputs -= min(inputs)
-max_i = max(inputs)
 
 # part 1
 print(min([sum(abs(inputs - i)) for i in inputs]))
 
 # part 2
+max_i = max(inputs)
 n = np.array(range(max_i + 1))
 table = (n + 1) * n // 2
 
