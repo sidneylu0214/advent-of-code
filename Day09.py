@@ -63,7 +63,7 @@ class Queue:
        
     pass
 
-def DFS(intput_table, init_pose):    
+def BFS(intput_table, init_pose):    
     pose_queue = Queue()
     pose_queue.PushBack(init_pose)
     
@@ -103,6 +103,6 @@ def DFS(intput_table, init_pose):
 
     return output_heights
 
-ans = [len(DFS(intput_table, l)) for l in low_points]
+ans = [len(BFS(intput_table, l)) for l in low_points]
 ans.sort()
 print(ans[-3] * ans[-2] * ans[-1])
