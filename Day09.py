@@ -8,34 +8,28 @@ with open('input.txt', 'r') as input_file:
 
 intput_table = np.array(input_pairs)
 
-
 # part 1
 height, width = intput_table.shape
 low_points = []
 for h in range(height):
     for w in range(width):
-        here = intput_table[h][w]
+        is_law = True        
+        neighbor = []
 
-        is_law = True
-        
         if(h > 0):
-            up = intput_table[h - 1][w]
-            if here >= up:
-                is_law = False
+            neighbor.append([h - 1, w])
         
         if(h < height - 1):
-            down = intput_table[h + 1][w]
-            if here >= down:
-                is_law = False
+            neighbor.append([h + 1, w])
 
         if(w > 0):
-            left = intput_table[h][w - 1]
-            if here >= left:
-                is_law = False
+            neighbor.append([h, w - 1])
         
         if(w < width - 1):
-            right = intput_table[h][w + 1]
-            if here >= right:
+            neighbor.append([h, w + 1])
+
+        for th ,tw in neighbor:
+            if intput_table[h][w] >= intput_table[th][tw]:
                 is_law = False
 
         if is_law:
@@ -45,7 +39,6 @@ for h in range(height):
 
 ans_part1 = [intput_table[h][w] for h, w in low_points]
 print(sum(ans_part1) + len(ans_part1))
-
 
 
 # part 2
@@ -59,50 +52,41 @@ class Queue:
     def PopFront(self):
         item = self.queue[0]
         self.queue = self.queue[1:]
-        return item
-       
+        return item       
     pass
 
-def BFS(intput_table, init_pose):    
+def BFS(intput_table, init_pose):
     pose_queue = Queue()
     pose_queue.PushBack(init_pose)
     
-    output_heights = []    
-
-    height, width = intput_table.shape
+    sum = 0
     visited_pose = np.zeros(intput_table.shape)
 
     while len(pose_queue.queue):
         h, w = pose_queue.PopFront()
-        here_height = intput_table[h][w]
-        output_heights.append(here_height)
+        sum += 1
 
+        neighbors = []
         if(h > 0):
-            up = intput_table[h - 1][w]
-            if up < 9 and up >= here_height and not visited_pose[h - 1][w]:
-                pose_queue.PushBack([h - 1, w])
-                visited_pose[h - 1][w] +=1
+            neighbors.append([h - 1, w])
         
         if(h < height - 1):
-            down = intput_table[h + 1][w]
-            if down < 9 and down >= here_height and not visited_pose[h + 1][w]:
-                pose_queue.PushBack([h + 1, w])
-                visited_pose[h + 1][w] += 1
+            neighbors.append([h + 1, w])
 
         if(w > 0):
-            left = intput_table[h][w - 1]
-            if left < 9 and left >= here_height and not visited_pose[h][w - 1]:
-                pose_queue.PushBack([h, w - 1])
-                visited_pose[h][w - 1] += 1
+            neighbors.append([h, w - 1])
         
         if(w < width - 1):
-            right = intput_table[h][w + 1]
-            if right < 9 and right >= here_height and not visited_pose[h][w + 1]:
-                pose_queue.PushBack([h, w + 1])
-                visited_pose[h][w + 1] += 1
+            neighbors.append([h, w + 1])
 
-    return output_heights
+        for th, tw in neighbors:
+            neighbor = intput_table[th][tw]
+            if neighbor < 9 and neighbor >= intput_table[h][w] and not visited_pose[th][tw]:
+                pose_queue.PushBack([th, tw])
+                visited_pose[th][tw] += 1
 
-ans = [len(BFS(intput_table, l)) for l in low_points]
+    return sum
+
+ans = [BFS(intput_table, l) for l in low_points]
 ans.sort()
 print(ans[-3] * ans[-2] * ans[-1])
