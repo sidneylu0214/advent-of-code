@@ -1,4 +1,5 @@
 import numpy as np
+import queue
 
 input_pairs = []
 with open('input.txt', 'r') as input_file:
@@ -42,28 +43,15 @@ print(sum(ans_part1) + len(ans_part1))
 
 
 # part 2
-class Queue:
-    def __init__(self):
-        self.queue = []
-    
-    def PushBack(self, item):
-        self.queue.append(item)
-    
-    def PopFront(self):
-        item = self.queue[0]
-        self.queue = self.queue[1:]
-        return item       
-    pass
-
 def BFS(intput_table, init_pose):
-    pose_queue = Queue()
-    pose_queue.PushBack(init_pose)
+    pose_queue = queue.Queue()
+    pose_queue.put(init_pose)
     
     sum = 0
     visited_pose = np.zeros(intput_table.shape)
 
-    while len(pose_queue.queue):
-        h, w = pose_queue.PopFront()
+    while not pose_queue.empty():
+        h, w = pose_queue.get()
         sum += 1
 
         neighbors = []
@@ -82,7 +70,7 @@ def BFS(intput_table, init_pose):
         for th, tw in neighbors:
             neighbor = intput_table[th][tw]
             if neighbor < 9 and neighbor >= intput_table[h][w] and not visited_pose[th][tw]:
-                pose_queue.PushBack([th, tw])
+                pose_queue.put([th, tw])
                 visited_pose[th][tw] += 1
 
     return sum
