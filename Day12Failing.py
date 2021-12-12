@@ -6,9 +6,6 @@ with open('input.txt', 'r') as input_file:
         input_pairs.append(set([i for i in line[:-1].split('-')]))
     pass
 
-start_nodes = [i for i in input_pairs if 'start' in i]
-end_nodes = [i for i in input_pairs if 'end' in i]
-
 
 # create graph
 neighbors = {}
@@ -25,10 +22,11 @@ for i in set.union(*input_pairs):
     calculate_table[i] = 0
 
 
-paths = []
-def FindPath(path, calculate_table):
+def FindPath(path, calculate_table, result_paths):
+    calculate_table[path[-1]] +=1
+
     if path[-1] == 'end':
-        paths.append(path)
+        result_paths.append(path)
         print(calculate_table)
         print(path)
         return True
@@ -37,24 +35,15 @@ def FindPath(path, calculate_table):
         return False
 
     for next_node in neighbors[path[-1]]:
-
-        if path[-1] == next_node:
-            continue
         if next_node.islower():
-            if calculate_table[next_node] > 0:
+            if calculate_table[next_node] > 1:
                 continue
 
         calculate_table = calculate_table.copy()
         path = path.copy()
-        calculate_table[next_node] += 1
         path.append(next_node)
-        FindPath(path, calculate_table)
+        FindPath(path, calculate_table, result_paths)
     pass
 
-
-calculate_table_start = calculate_table.copy()
-path = ['start']
-calculate_table_start['start'] += 1
-FindPath(path, calculate_table_start)
-
-test = 'test'
+result_paths = []
+FindPath(['start'], calculate_table, result_paths)
