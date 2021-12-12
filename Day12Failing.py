@@ -20,6 +20,7 @@ for i in set.union(*input_pairs):
     calculate_table[i] = 0
 
 
+# part 1
 def FindPath(path, calculate_table, result_paths):
     calculate_table = calculate_table.copy()   
 
@@ -30,10 +31,6 @@ def FindPath(path, calculate_table, result_paths):
         result_paths.append(path)
         return True
     
-    if sum(calculate_table.values()) > len(calculate_table) + 1:
-        return False
-    
-
     for next_node in neighbors[current_node]:
         if next_node.islower() and calculate_table[next_node]:
             pass
@@ -44,10 +41,36 @@ def FindPath(path, calculate_table, result_paths):
     return False
 
 result_paths = []
+FindPath(['start'], calculate_table.copy(), result_paths)
 
-FindPath(['start'], calculate_table, result_paths)
+print(len(result_paths))
 
-for path in result_paths:
-    print(path)
+
+
+# part 2
+def FindPath2(result_paths, path, calculate_table, visit_twice):
+    calculate_table = calculate_table.copy()   
+
+    current_node = path[-1]
+    calculate_table[current_node] +=1
+
+    if current_node == 'end':
+        result_paths.append(path)
+        return True
+    
+    for next_node in neighbors[current_node]:
+        if next_node.islower() and calculate_table[next_node] > 1:
+            visit_twice = True
+            pass
+        elif next_node == 'start':
+            pass
+        else:
+            path_local = path.copy()
+            path_local.append(next_node)
+            FindPath2(result_paths, path_local, calculate_table, visit_twice)
+    return False
+
+result_paths = []
+FindPath2(result_paths, ['start'], calculate_table.copy(), False)
 
 print(len(result_paths))
