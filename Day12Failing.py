@@ -1,11 +1,8 @@
-import itertools
-
 input_pairs = []
 with open('input.txt', 'r') as input_file:
     for line in input_file:
         input_pairs.append(set([i for i in line[:-1].split('-')]))
     pass
-
 
 # create graph
 neighbors = {}
@@ -31,19 +28,24 @@ def FindPath(path, calculate_table, result_paths):
         print(path)
         return True
 
-    if sum(calculate_table.values()) > len(calculate_table) + 1:
-        return False
+    else:
+        if sum(calculate_table.values()) > len(calculate_table) + 1:
+            return False
 
-    for next_node in neighbors[path[-1]]:
-        if next_node.islower():
-            if calculate_table[next_node] > 1:
-                continue
+        print('node ' + str(path[-1]) + ' neighbors are ' + str(neighbors[path[-1]]))
 
-        calculate_table = calculate_table.copy()
-        path = path.copy()
-        path.append(next_node)
-        FindPath(path, calculate_table, result_paths)
+        for next_node in neighbors[path[-1]]:
+            if next_node.islower() and calculate_table[next_node]:
+                pass
+            else:
+                calculate_table = calculate_table.copy()
+                print('path ' + str(path) + ' append ' + str(next_node))
+                path = path.copy()
+                path.append(next_node)
+                FindPath(path, calculate_table, result_paths)
     pass
 
 result_paths = []
 FindPath(['start'], calculate_table, result_paths)
+
+test = 'test'
