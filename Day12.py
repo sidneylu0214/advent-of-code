@@ -46,19 +46,19 @@ FindPath(['start'], calculate_table.copy(), result_paths)
 print(len(result_paths))
 
 
+
 # part 2
-def FindPath2(result_paths, path, calculate_table):
+def FindPath2(result_paths, current_node, calculate_table):
     calculate_table = calculate_table.copy()   
 
-    current_node = path[-1]
-    calculate_table[current_node] +=1
+    calculate_table[current_node] += 1
 
     smalls = [v for k, v in calculate_table.items() if k.islower()]
     if smalls.count(2) > 1:
         return False
 
     if current_node == 'end':
-        result_paths.append(path)
+        result_paths.append(1)
         return True
     
     for next_node in neighbors[current_node]:
@@ -67,12 +67,10 @@ def FindPath2(result_paths, path, calculate_table):
         elif next_node == 'start':
             pass
         else:
-            path_local = path.copy()
-            path_local.append(next_node)
-            FindPath2(result_paths, path_local, calculate_table)
+            FindPath2(result_paths, next_node, calculate_table)
     return False
 
 result_paths = []
-FindPath2(result_paths, ['start'], calculate_table.copy())
+FindPath2(result_paths, 'start', calculate_table.copy())
 
 print(len(result_paths))
