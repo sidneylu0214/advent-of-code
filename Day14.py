@@ -57,14 +57,16 @@ for key in transition.keys():
         base_martix[x_part][y_part] += 1
     pass
 
+
 init_state = np.zeros([len(transition), 1], dtype=np.ulonglong)
 for i in range(len(input_string) - 1):
     pair = input_string[i: i + 2]
     init_state[convert_num[pair]][0] += 1
 
-def FastPower(in_matrix, times):
+
+def FastPower(in_matrix, times:int):
     if times == 0:
-      return np.identity(in_matrix.shape[0], dtype=np.ulonglong)
+      return np.identity(in_matrix.shape[0], dtype=in_matrix.dtype)
 
     x = FastPower(in_matrix, times // 2)
     x = np.matmul(x, x)
@@ -72,6 +74,7 @@ def FastPower(in_matrix, times):
       x = np.matmul(x, in_matrix)
 
     return x
+
 
 final_state = np.matmul(FastPower(base_martix, 40), init_state)
 output = list(itertools.chain(*final_state.tolist()))
