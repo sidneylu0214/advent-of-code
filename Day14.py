@@ -15,6 +15,8 @@ for i in range(len(input_pairs) - 2) :
     pass
 
 
+input_string = input_pairs[0]
+
 # part 1
 def Apply(table, input_string):
     outputs = input_string[0]    
@@ -27,13 +29,11 @@ def Apply(table, input_string):
     return outputs
 
 
-output = input_pairs[0]
+output = input_string
 for i in range(10):
     output = Apply(transition, output)
-    pass
 
 cnt = [output.count(a) for a in string.ascii_uppercase if output.count(a) > 0]
-
 print('part 1 is ' + str(max(cnt) - min(cnt)))
 
 
@@ -44,7 +44,6 @@ i = 0
 for key in transition.keys():    
     convert_num[key] = i
     i +=1
-    pass
 
 matrix_shape = [len(transition), len(transition)]
 base_martix = np.zeros(matrix_shape, dtype=np.ulonglong)
@@ -58,12 +57,10 @@ for key in transition.keys():
         base_martix[x_part][y_part] += 1
     pass
 
-
 init_state = np.zeros([len(transition), 1], dtype=np.ulonglong)
-for i in range(len(input_pairs[0]) - 1):
-    pair = (input_pairs[0])[i: i + 2]
+for i in range(len(input_string) - 1):
+    pair = input_string[i: i + 2]
     init_state[convert_num[pair]][0] += 1
-
 
 def FastPower(in_matrix, times):
     if times == 0:
@@ -76,7 +73,6 @@ def FastPower(in_matrix, times):
 
     return x
 
-
 final_state = np.matmul(FastPower(base_martix, 40), init_state)
 output = list(itertools.chain(*final_state.tolist()))
 
@@ -86,10 +82,8 @@ for key in transition.keys():
     cnt_tables[a] = 0
     cnt_tables[b] = 0
 
-head = (input_pairs[0])[0]
-tail = (input_pairs[0])[-1]
-cnt_tables[head] += 1
-cnt_tables[tail] += 1
+cnt_tables[input_string[0]] += 1
+cnt_tables[input_string[-1]] += 1
 
 for key in transition.keys():
     a, b = key
@@ -97,7 +91,5 @@ for key in transition.keys():
     cnt_tables[a] += cnt
     cnt_tables[b] += cnt
 
-
 diff = max(cnt_tables.values()) - min(cnt_tables.values())
-
 print('part 2 is ' + str(diff // 2))
