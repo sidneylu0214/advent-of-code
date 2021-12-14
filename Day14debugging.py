@@ -31,11 +31,12 @@ def Apply(table, input_string):
 output = input_pairs[0]
 for i in range(10):
     output = Apply(transition, output)
+    print(len(output))
     pass
 
 cnt = [output.count(a) for a in string.ascii_uppercase if output.count(a) > 0]
 
-print(max(cnt) - min(cnt))
+print('part 1 is' + str(max(cnt) - min(cnt)))
 
 
 
@@ -54,6 +55,7 @@ for key in transition.keys():
     x_part = convert_num[key]
     y_parts = [convert_num[k] for k in transition[key]]
 
+    test = 'test'
     for y_part in y_parts:
         base_martix[x_part][y_part] += 1
     pass
@@ -67,9 +69,10 @@ for i in range(len(input_pairs[0]) - 1):
 
 for i in range(10):
     init_state = np.matmul(base_martix, init_state)
+    print(sum(init_state))
 
 output = list(itertools.chain(*init_state.tolist()))
 
 cnt = [o for o in output if o > 0]
 
-print(max(cnt) - min(cnt))
+print('part 2 is' + str(max(cnt) - min(cnt)))
