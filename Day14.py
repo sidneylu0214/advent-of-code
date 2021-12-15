@@ -69,7 +69,6 @@ def FastPower(in_matrix, times:int):
     return x
 
 final_state = np.matmul(FastPower(transition_martix, 40), init_state).flatten().tolist()
-
 for key, value in convert_num.items():
     cnt = final_state[value]
     cnt_tables[key[0]] += cnt
