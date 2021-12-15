@@ -51,8 +51,6 @@ base_martix = np.zeros(matrix_shape, dtype=np.ulonglong)
 for key in transition.keys():
     y_part = convert_num[key]
     x_parts = [convert_num[k] for k in transition[key]]
-
-    test = 'test'
     for x_part in x_parts:
         base_martix[x_part][y_part] += 1
     pass
@@ -75,7 +73,6 @@ def FastPower(in_matrix, times:int):
 
     return x
 
-
 final_state = np.matmul(FastPower(base_martix, 40), init_state)
 output = list(itertools.chain(*final_state.tolist()))
 
@@ -84,7 +81,9 @@ for key in transition.keys():
     a, b = key
     cnt_tables[a] = 0
     cnt_tables[b] = 0
+    pass
 
+# head tail lack 1 time
 cnt_tables[input_string[0]] += 1
 cnt_tables[input_string[-1]] += 1
 
