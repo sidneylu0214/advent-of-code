@@ -27,7 +27,7 @@ class SortedList:
         bslindex = bisect.bisect_left(KeyWrapper(self.data, key=self.keyfun), self.keyfun(item))
         self.data.insert(bslindex, item)
 
-def Dijkstra(current_nodes:SortedList, distance, source, cost):
+def DijkstraOneRound(current_nodes:SortedList, distance, source, cost):
     x, y, d = current_nodes.data.pop(0)
 
     target = []
@@ -61,7 +61,7 @@ source =  np.zeros([height, width , 2], cost.dtype)
 current_nodes = SortedList(keyfun = lambda x : x[2])
 current_nodes.Insert([0,0,0])
 while len(current_nodes.data):
-    Dijkstra(current_nodes, distance, source, cost)
+    DijkstraOneRound(current_nodes, distance, source, cost)
 
 print(distance[height - 1][width - 1])
 
@@ -87,6 +87,6 @@ current_nodes = SortedList(keyfun = lambda x : x[2])
 current_nodes.Insert([0,0,0])
 
 while len(current_nodes.data):
-    Dijkstra(current_nodes, distance, source, cost)
+    DijkstraOneRound(current_nodes, distance, source, cost)
 
 print(distance[height - 1][width - 1])
