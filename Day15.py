@@ -1,5 +1,4 @@
 import numpy as np
-import sys
 import bisect
 
 input_lines = []
@@ -27,8 +26,8 @@ class SortedList:
         bslindex = bisect.bisect_left(KeyWrapper(self.data, key=self.keyfun), self.keyfun(item))
         self.data.insert(bslindex, item)
 
-def DijkstraOneRound(current_nodes:SortedList, distance, source, cost):
-    x, y, d = current_nodes.data.pop(0)
+def DijkstraOneRound(sorted_nodes:SortedList, distance, source, cost):
+    x, y, d = sorted_nodes.data.pop(0)
 
     target = []
     if(x > 0):
@@ -47,7 +46,7 @@ def DijkstraOneRound(current_nodes:SortedList, distance, source, cost):
         if distance[tx][ty] > cost[tx][ty] + d:
             distance[tx][ty] = cost[tx][ty] + d
             source[tx][ty] = [x, y]
-            current_nodes.Insert([tx, ty, cost[tx][ty] + d])
+            sorted_nodes.Insert([tx, ty, cost[tx][ty] + d])
     pass
 
 # part1
@@ -58,10 +57,10 @@ distance[0][0] = 0
 height, width = cost.shape
 source =  np.zeros([height, width , 2], cost.dtype)
 
-current_nodes = SortedList(keyfun = lambda x : x[2])
-current_nodes.Insert([0,0,0])
-while len(current_nodes.data):
-    DijkstraOneRound(current_nodes, distance, source, cost)
+sorted_nodes = SortedList(keyfun = lambda x : x[2])
+sorted_nodes.Insert([0,0,0])
+while len(sorted_nodes.data):
+    DijkstraOneRound(sorted_nodes, distance, source, cost)
 
 print(distance[height - 1][width - 1])
 
@@ -83,10 +82,10 @@ distance[0][0] = 0
 height, width = cost.shape
 source =  np.zeros([height, width , 2], cost.dtype)
 
-current_nodes = SortedList(keyfun = lambda x : x[2])
-current_nodes.Insert([0,0,0])
+sorted_nodes = SortedList(keyfun = lambda x : x[2])
+sorted_nodes.Insert([0,0,0])
 
-while len(current_nodes.data):
-    DijkstraOneRound(current_nodes, distance, source, cost)
+while len(sorted_nodes.data):
+    DijkstraOneRound(sorted_nodes, distance, source, cost)
 
 print(distance[height - 1][width - 1])
