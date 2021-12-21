@@ -1,13 +1,13 @@
 import numpy as np
 
 intput_txt = []
-with open('input.txt', 'r') as intput_txt:
-    for line in intput_txt:
-        input_lines.append([1 if i == '#' else 0 for i in line[:-1]])
+with open('input.txt', 'r') as lines:
+    for line in lines:
+        intput_txt.append([1 if i == '#' else 0 for i in line[:-1]])
     pass
 
-enhancement = input_lines[0]
-input_image = np.array(input_lines[2:], dtype = int)
+enhancement = intput_txt[0]
+input_image = np.array(intput_txt[2:], dtype = int)
 
 expand = 3
 c_expand = [np.zeros(input_image.shape[0])] * expand
