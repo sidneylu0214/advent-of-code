@@ -1,0 +1,22 @@
+import numpy as np
+
+A1 = np.array([-763,-608,329])
+A2 = np.array([-857,735,662])
+B1 = np.array([382,-782,771])
+B2 = np.array([-415,-410,836])
+C1 = np.array([513,535,660])
+C2 = np.array([-526,-541,-481])
+D1 = np.array([370,550,692])
+D2 = np.array([-494,-398,-496])
+
+
+
+mat1 = np.asmatrix([[1,2,3], [3,5,7], [8,8,9]]).transpose()
+mat2 = np.asmatrix([[1,2,3], [4,5,6], [7,8,9]]).transpose()
+
+inv_mat1 = np.linalg.inv(mat1) 
+
+X = np.matmul(inv_mat1, mat2)
+
+print(np.matmul(X, [[1],[2],[3]]))
+print([1,2,3])
