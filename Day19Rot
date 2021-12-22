@@ -21,18 +21,14 @@ S1 = np.asmatrix([V1, V2, V3]).transpose()
 S2 = np.asmatrix([U1, U2, U3]).transpose()
 
 Xrot = np.matmul(S2, np.linalg.inv(S1))
+Xtrans = np.matmul(Xrot, A1.transpose()) - A2.transpose()
+
 
 print(Xrot)
-
-
-print(np.matmul(Xrot, V1.transpose()))
-print(U1)
-
-print(np.matmul(Xrot, V2.transpose()))
-print(U2)
-
-print(np.matmul(Xrot, V3.transpose()))
-print(U3)
+print(Xtrans)
+print(np.matmul(Xrot, B1.transpose()) - B2.transpose())
+print(np.matmul(Xrot, C1.transpose()) - C2.transpose())
+print(np.matmul(Xrot, D1.transpose()) - D2.transpose())
 
 
 A1 = np.array([-763,-608,329, 1])
