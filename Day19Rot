@@ -9,7 +9,6 @@ C2 = np.array([-526,-541,-481])
 D1 = np.array([370,550,692])
 D2 = np.array([-494,-398,-496])
 
-
 V1 = B1 - A1
 V2 = C1 - A1
 V3 = D1 - A1
@@ -18,10 +17,16 @@ U1 = B2 - A2
 U2 = C2 - A2
 U3 = D2 - A2
 
-mat1 = np.asmatrix([V1, V2, V3]).transpose()
-mat2 = np.asmatrix([U1, U2, U3]).transpose()
+S1 = np.asmatrix([V1, V2, V3]).transpose()
+S2 = np.asmatrix([U1, U2, U3]).transpose()
 
-X = np.matmul(mat2, np.linalg.inv(mat1) )
+X = np.matmul(S2, np.linalg.inv(S1))
 
 print(np.matmul(X, V1.transpose()))
 print(U1)
+
+print(np.matmul(X, V2.transpose()))
+print(U2)
+
+print(np.matmul(X, V3.transpose()))
+print(U3)
