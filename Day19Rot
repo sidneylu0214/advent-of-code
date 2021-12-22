@@ -10,13 +10,18 @@ D1 = np.array([370,550,692])
 D2 = np.array([-494,-398,-496])
 
 
+V1 = B1 - A1
+V2 = C1 - A1
+V3 = D1 - A1
 
-mat1 = np.asmatrix([[1,2,3], [3,5,7], [8,8,9]]).transpose()
-mat2 = np.asmatrix([[1,2,3], [4,5,6], [7,8,9]]).transpose()
+U1 = B2 - A2
+U2 = C2 - A2
+U3 = D2 - A2
 
-inv_mat1 = np.linalg.inv(mat1) 
+mat1 = np.asmatrix([V1, V2, V3]).transpose()
+mat2 = np.asmatrix([U1, U2, U3]).transpose()
 
-X = np.matmul(inv_mat1, mat2)
+X = np.matmul(mat2, np.linalg.inv(mat1) )
 
-print(np.matmul(X, [[1],[2],[3]]))
-print([1,2,3])
+print(np.matmul(X, V1.transpose()))
+print(U1)
