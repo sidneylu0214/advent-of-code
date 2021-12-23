@@ -4,7 +4,7 @@ import numpy as np
 # camera2 see A, B, C, D and get A2, B2, C2, D2
 
 #
-# method 1: base on high school knowledge
+# method 1: base on high school math knowledge
 #
 # camera1 is O1 = (0,0,0)
 # camera2 is O2 is unknown
@@ -20,19 +20,19 @@ D2 = np.array([-494,-398,-496])
 # Because we don't know how to move O1 to O2
 # Need eliminate pose diff, that is, using vector
 # Distance((B1 - O1) - (A1 - O1)) = Distance((B2 - O2) - (A2 - O2))
+# Thus, Distance(B1 - A1) = Distance(B2 - A2)
 V1 = B1 - A1
 V2 = C1 - A1
 V3 = D1 - A1
-
 U1 = B2 - A2
 U2 = C2 - A2
 U3 = D2 - A2
 
-# to calculate roration matrix
+# roration matrix will sufficient:
 # C_rot * V1 = U1
 # C_rot * V2 = U2
 # C_rot * V3 = U3
-
+# reshape for 3x3 matrix for inverse operator
 # S1 = [V1 V2 V3], S2 = [U1 U2 U3]
 # C_rot * S1 = S2
 # Thus, C_rot = S2 * inv(S1)
@@ -58,9 +58,9 @@ print(str(np.matmul(C_rot, D1.transpose()) + C_trans) + ' = ' + str(D2))
 # method 2: base on Graphics knowledge
 #
 # pose P is (px, py, pz, 1), vector V is (vx, vy, vz, 0)
-# for any affine matrix A will sufficient both condition:
-# A * P = Q  <-> both P, Q are pose
-# A * V = U  <-> both U, V are vector
+# for any affine matrix A will sufficient both conditions:
+# A * P = Q  <->  both P, Q are pose
+# A * V = U  <->  both U, V are vector
 
 A1 = np.array([-763,-608,329, 1])
 A2 = np.array([-857,735,662, 1])
