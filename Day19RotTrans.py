@@ -6,6 +6,7 @@ import numpy as np
 #
 # method 1: base on high school math knowledge
 #
+
 # camera1 is O1 = (0,0,0)
 # camera2 is O2 is unknown
 A1 = np.array([-763,-608,329])
@@ -57,6 +58,7 @@ print(str(np.matmul(C_rot, D1.transpose()) + C_trans) + ' = ' + str(D2))
 #
 # method 2: base on Graphics knowledge
 #
+
 # pose P is (px, py, pz, 1), vector V is (vx, vy, vz, 0)
 # for any affine matrix A will sufficient both conditions:
 # A * P = Q  <->  both P, Q are pose
