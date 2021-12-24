@@ -1,7 +1,10 @@
 import numpy as np
 
-# camera1 see A, B, C, D and get A1, B1, C1, D1
-# camera2 see A, B, C, D and get A2, B2, C2, D2
+# camera1 see A, B, C, D and get A1, B1, C1, D1 as S1
+# camera2 see A, B, C, D and get A2, B2, C2, D2 as S2
+
+# To find T let T(X1) -> X2
+#         where X1 X2 are the same point and X1 ∈ S1 and X2 ∈ S2
 
 #
 # method 1: base on high school math knowledge
@@ -48,7 +51,7 @@ print(B2.transpose() - np.matmul(C_rot, B1.transpose()))
 print(C2.transpose() - np.matmul(C_rot, C1.transpose()))
 print(D2.transpose() - np.matmul(C_rot, D1.transpose()))
 
-# apply
+# apply T
 print(str(np.matmul(C_rot, A1.transpose()) + C_trans) + ' = ' + str(A2))
 print(str(np.matmul(C_rot, B1.transpose()) + C_trans) + ' = ' + str(B2))
 print(str(np.matmul(C_rot, C1.transpose()) + C_trans) + ' = ' + str(C2))
@@ -81,7 +84,7 @@ S1 = np.asmatrix([A1, B1, C1, D1]).transpose()
 S2 = np.asmatrix([A2, B2, C2, D2]).transpose()
 Affine = np.matmul(S2, np.linalg.inv(S1))
 
-# verify Affine * S1 = S2
+# apply T
 print(str(np.matmul(Affine, A1.transpose())) + ' = ' + str(A2))
 print(str(np.matmul(Affine, B1.transpose())) + ' = ' + str(B2))
 print(str(np.matmul(Affine, C1.transpose())) + ' = ' + str(C2))
