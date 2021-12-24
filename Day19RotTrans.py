@@ -33,29 +33,29 @@ V2 = C2 - A2
 W2 = D2 - A2
 
 # roration matrix will sufficient:
-# C_rot * V1 = V2
-# C_rot * U1 = U2
-# C_rot * W1 = W2
+# T_rot * V1 = V2
+# T_rot * U1 = U2
+# T_rot * W1 = W2
 # reshape for 3x3 matrix for inverse operator
 # S1 = [U1 V1 W1], S2 = [U2 V2 W2]
-# C_rot * S1 = S2
-# Thus, C_rot = S2 * inv(S1)
+# T_rot * S1 = S2
+# Thus, T_rot = S2 * inv(S1)
 S1 = np.asmatrix([U1, V1, W1]).transpose()
 S2 = np.asmatrix([U2, V2, W2]).transpose()
-C_rot = np.matmul(S2, np.linalg.inv(S1))
+T_rot = np.matmul(S2, np.linalg.inv(S1))
 # rot A1 to get A2 pose diff
-C_trans = A2.transpose() - np.matmul(C_rot, A1.transpose())
+T_trans = A2.transpose() - np.matmul(T_rot, A1.transpose())
 # verify Rot(A1) - A2 = Rot(B1) - B2 = Rot(C1) - C2 = Rot(D1) - D2
-print(C_trans)
-print(B2.transpose() - np.matmul(C_rot, B1.transpose()))
-print(C2.transpose() - np.matmul(C_rot, C1.transpose()))
-print(D2.transpose() - np.matmul(C_rot, D1.transpose()))
+print(T_trans)
+print(B2.transpose() - np.matmul(T_rot, B1.transpose()))
+print(C2.transpose() - np.matmul(T_rot, C1.transpose()))
+print(D2.transpose() - np.matmul(T_rot, D1.transpose()))
 
 # apply T
-print(str(np.matmul(C_rot, A1.transpose()) + C_trans) + ' = ' + str(A2))
-print(str(np.matmul(C_rot, B1.transpose()) + C_trans) + ' = ' + str(B2))
-print(str(np.matmul(C_rot, C1.transpose()) + C_trans) + ' = ' + str(C2))
-print(str(np.matmul(C_rot, D1.transpose()) + C_trans) + ' = ' + str(D2))
+print(str(np.matmul(T_rot, A1.transpose()) + T_trans) + ' = ' + str(A2))
+print(str(np.matmul(T_rot, B1.transpose()) + T_trans) + ' = ' + str(B2))
+print(str(np.matmul(T_rot, C1.transpose()) + T_trans) + ' = ' + str(C2))
+print(str(np.matmul(T_rot, D1.transpose()) + T_trans) + ' = ' + str(D2))
 
 
 #
@@ -63,9 +63,9 @@ print(str(np.matmul(C_rot, D1.transpose()) + C_trans) + ' = ' + str(D2))
 #
 
 # pose P is (px, py, pz, 1), vector V is (vx, vy, vz, 0)
-# for any affine matrix A will sufficient both conditions:
-# A * P = Q  <->  both P, Q are pose
-# A * V = U  <->  both U, V are vector
+# for any affine matrix T will sufficient both conditions:
+# T * P = Q  <->  both P, Q are pose
+# T * V = U  <->  both U, V are vector
 
 A1 = np.array([-763,-608,329, 1])
 A2 = np.array([-857,735,662, 1])
@@ -76,16 +76,16 @@ C2 = np.array([-526,-541,-481, 1])
 D1 = np.array([370,550,692, 1])
 D2 = np.array([-494,-398,-496, 1])
 
-# Affine * A1 = A2 and so on
+# T * A1 = A2 and so on
 # let S1 [A1 B1 C1 D1], S2 = [A2 B2 C2 D2]
-# Affine * S1 = S2
-# Thus, Affine = S2 * inv(S1)
+# T * S1 = S2
+# Thus, T = S2 * inv(S1)
 S1 = np.asmatrix([A1, B1, C1, D1]).transpose()
 S2 = np.asmatrix([A2, B2, C2, D2]).transpose()
-Affine = np.matmul(S2, np.linalg.inv(S1))
+T = np.matmul(S2, np.linalg.inv(S1))
 
 # apply T
-print(str(np.matmul(Affine, A1.transpose())) + ' = ' + str(A2))
-print(str(np.matmul(Affine, B1.transpose())) + ' = ' + str(B2))
-print(str(np.matmul(Affine, C1.transpose())) + ' = ' + str(C2))
-print(str(np.matmul(Affine, D1.transpose())) + ' = ' + str(D2))
+print(str(np.matmul(T, A1.transpose())) + ' = ' + str(A2))
+print(str(np.matmul(T, B1.transpose())) + ' = ' + str(B2))
+print(str(np.matmul(T, C1.transpose())) + ' = ' + str(C2))
+print(str(np.matmul(T, D1.transpose())) + ' = ' + str(D2))
