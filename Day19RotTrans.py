@@ -22,31 +22,31 @@ D2 = np.array([-494,-398,-496])
 # Need eliminate pose diff, that is, using vector
 # Distance((B1 - O1) - (A1 - O1)) = Distance((B2 - O2) - (A2 - O2))
 # Thus, Distance(B1 - A1) = Distance(B2 - A2)
-V1 = B1 - A1
-V2 = C1 - A1
-V3 = D1 - A1
-U1 = B2 - A2
-U2 = C2 - A2
-U3 = D2 - A2
+U1 = B1 - A1
+V1 = C1 - A1
+W1 = D1 - A1
+U2 = B2 - A2
+V2 = C2 - A2
+W2 = D2 - A2
 
 # roration matrix will sufficient:
-# C_rot * V1 = U1
-# C_rot * V2 = U2
-# C_rot * V3 = U3
+# C_rot * V1 = V2
+# C_rot * U1 = U2
+# C_rot * W1 = W2
 # reshape for 3x3 matrix for inverse operator
-# S1 = [V1 V2 V3], S2 = [U1 U2 U3]
+# S1 = [U1 V1 W1], S2 = [U2 V2 W2]
 # C_rot * S1 = S2
 # Thus, C_rot = S2 * inv(S1)
-S1 = np.asmatrix([V1, V2, V3]).transpose()
-S2 = np.asmatrix([U1, U2, U3]).transpose()
+S1 = np.asmatrix([U1, V1, W1]).transpose()
+S2 = np.asmatrix([U2, V2, W2]).transpose()
 C_rot = np.matmul(S2, np.linalg.inv(S1))
 # rot A1 to get A2 pose diff
 C_trans = A2.transpose() - np.matmul(C_rot, A1.transpose())
 # verify Rot(A1) - A2 = Rot(B1) - B2 = Rot(C1) - C2 = Rot(D1) - D2
 print(C_trans)
-print(B2.transpose()) - np.matmul(C_rot, B1.transpose())
-print(C2.transpose()) - np.matmul(C_rot, C1.transpose())
-print(D2.transpose()) - np.matmul(C_rot, D1.transpose())
+print(B2.transpose() - np.matmul(C_rot, B1.transpose()))
+print(C2.transpose() - np.matmul(C_rot, C1.transpose()))
+print(D2.transpose() - np.matmul(C_rot, D1.transpose()))
 
 # apply
 print(str(np.matmul(C_rot, A1.transpose()) + C_trans) + ' = ' + str(A2))
