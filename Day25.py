@@ -10,7 +10,6 @@ with open('input.txt', 'r') as lines:
 def Update(table):
     rows = len(table)
     cols = len(table[0])
-
     if_update = False
 
     # right first
@@ -21,23 +20,21 @@ def Update(table):
                 (temp_table[r])[c] = '>'
                 (temp_table[r])[c - 1] = '.'
                 if_update = True
-        pass
-    output = copy.deepcopy(temp_table)
 
     # do down
+    output = copy.deepcopy(temp_table)
     for r in range(rows):
         for c in range(cols):
             if (temp_table[r])[c] == '.' and (temp_table[r - 1])[c] == 'v':
                 (output[r])[c] = 'v'
                 (output[r - 1])[c] = '.'
                 if_update = True
-        pass
 
     return output, if_update
 
-update = 1
+update = True
 i = 0
-while update > 0:
+while update:
     i +=1     
     input_txt, update = Update(input_txt)
 
